@@ -1,0 +1,27 @@
+<mat-progress-bar *ngIf="_globalService.showProgressBar" class="global-progress-bar" mode="indeterminate"></mat-progress-bar>
+<mat-drawer-container autosize (resized)="resizedEvent()">
+
+  <mat-drawer opened position="start" id="mat-drawer__id" fixedInViewport="true" #drawer class="avant-sidenav" 
+     [mode]="over"  (mouseleave)="sidenavhoverOutEffect()" (mouseenter) = "sidenavhoverEffect()" 
+      (openedStart)="positionRechanged()" (closedStart) = "positionChanged()" >
+    <!-- sidebar -->
+    <app-navigation #nav></app-navigation>
+
+  </mat-drawer>
+
+
+  <mat-drawer-content id="mat-content__id">
+    <div class="avant-sidenav-content">
+      <!--  header -->
+      <app-header></app-header>
+        <app-container *ngIf="!isLoading" [spaceId]="selectedSpaceId"></app-container>
+     
+
+      <div></div>
+    </div>
+  </mat-drawer-content>
+
+
+</mat-drawer-container>
+
+

@@ -1,0 +1,111 @@
+.conversation-delete-dialog {
+    .mat-dialog-container {
+        .primary-color-input,
+        .secondary-color-input {
+            padding: 6px 8px;
+        }
+
+        .wrap-message-content {
+            position: relative;
+            width: calc(100% - 50px);
+            left: 50px;
+
+            .avatar {
+                position: relative;
+                left: -12px;
+                top: 20px;
+                left: -50px;
+                margin: 0;
+
+                .avatar-content {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+
+
+            .wrap-contact-name-time {
+                position: absolute;
+                top: 3px;
+                left: 45px;
+
+                .contact-name {
+                    font-size: 15px;
+                    position: relative;
+                    top: 8px;
+                    font-weight: bold;
+                    left: -36px;
+                }
+
+                .time {
+                    position: relative;
+                    top: 7px;
+                    left: -32px;
+                    font-size: 11px;
+                }
+            }
+
+
+
+
+            .bubble {
+                position: relative;
+                align-items: center;
+                justify-content: center;
+                padding: 0 0 0 12px;
+                max-width: 100%;
+                padding-bottom: 35px;
+
+                .message {
+                    white-space: pre-wrap;
+                    line-height: 1.8;
+                }
+            }
+
+            .download-chip {
+                box-shadow: none;
+            }
+
+
+
+
+
+            .time {
+                position: relative;
+                top: 7px;
+                left: -32px;
+                font-size: 11px;
+            }
+        }
+
+        .mention {
+            border-radius: 6px;
+            padding: 3px 3px 3px 0px;
+
+            span {
+                margin: 0 0px 0px 3px;
+            }
+        }
+
+        .wrap-checkbox {
+            margin: 10px 0 0px 30px;
+        }
+
+        .mat-column-select {
+            overflow: initial;
+        }
+
+        table {
+            width: 100%;
+        }
+    }
+
+    .upload-button {
+        margin-bottom:20px;
+        .mat-button-wrapper {
+            span {
+            padding: 10px;
+            }
+        }
+    }
+}

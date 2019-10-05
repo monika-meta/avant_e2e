@@ -1,0 +1,15 @@
+<!-- normal collapsable -->
+<a (click)="toggleOpen($event)" class="channel-list-link">
+    {{item.name}}
+    <mat-icon class="collapsable-arrow">keyboard_arrow_right</mat-icon>
+</a>
+
+<ul class="children" [@slideInOut]="isOpen">
+
+    <li *ngFor="let item of item.children;">
+        <channel-list-item *ngIf="item.property =='item'" [item]="item"></channel-list-item>
+        <channel-list-collapsable *ngIf="item.property =='collapsable'" [item]="item"></channel-list-collapsable>
+    </li>
+
+</ul>
+

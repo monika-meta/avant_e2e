@@ -1,0 +1,220 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "conflow": {
+            "root": "",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "styleext": "scss"
+                }
+            },
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "deployUrl": "/",
+                        "baseHref": "/",
+                        "outputPath": "dist",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.app.json",
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets",
+                            "src/vaddy-79e49a6983a0f41.html"
+                        ],
+                        "styles": [
+                            "src/styles.scss",
+                            "node_modules/devextreme/dist/css/dx.common.css",
+                            "node_modules/devextreme/dist/css/dx.material.blue.light.css"
+                        ],
+                        "scripts": [
+                          "node_modules/core-js/client/shim.min.js",
+                          "node_modules/reflect-metadata/Reflect.js"
+                        ],
+                        "showCircularDependencies": false
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.production.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "7mb",
+                                    "maximumError": "10mb"
+                                }
+                            ]
+                        },
+                        "sandbox": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.sandbox.ts"
+                                }
+                            ]
+                        },
+                        "develop": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.develop.ts"
+                                }
+                            ]
+                        },
+                      "staging": {
+                        "fileReplacements": [
+                          {
+                            "replace": "src/environments/environment.ts",
+                            "with": "src/environments/environment.staging.ts"
+                          }
+                        ],
+                        "optimization": true,
+                        "outputHashing": "all",
+                        "sourceMap": false,
+                        "extractCss": true,
+                        "namedChunks": false,
+                        "aot": true,
+                        "extractLicenses": true,
+                        "vendorChunk": false,
+                        "buildOptimizer": true,
+                        "budgets": [
+                          {
+                            "type": "initial",
+                            "maximumWarning": "7mb",
+                            "maximumError": "10mb"
+                          }
+                        ]
+                      },
+                        "ec": {
+                            "sourceMap": true,
+                            "extractCss": true
+                        },
+                        "hmr": {
+                            "fileReplacements": [
+                              {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.hmr.ts"
+                              }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "deployUrl": "/",
+                        "baseHref": "/",
+                        "browserTarget": "conflow:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "conflow:build:production"
+                        },
+                        "sandbox": {
+                            "browserTarget": "conflow:build:sandbox"
+                        },
+                        "develop": {
+                            "browserTarget": "conflow:build:develop"
+                        },
+                        "staging": {
+                            "browserTarget": "conflow:build:staging"
+                        },
+                        "hmr": {
+                            "hmr": true,
+                            "browserTarget": "conflow:build:hmr"
+                        },
+                        "ec": {
+                            "browserTarget": "conflow:build:ec"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "conflow:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.spec.json",
+                        "karmaConfig": "src/karma.conf.js",
+                        "styles": [
+                            "src/styles.scss"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "src/tsconfig.app.json",
+                            "src/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "**/src/app/fake-db/**/*"
+                        ]
+                    }
+                }
+            }
+        },
+        "conflow-e2e": {
+            "root": "e2e/",
+            "projectType": "application",
+            "prefix": "",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "conflow:serve:sandbox"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "conflow:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": "e2e/tsconfig.e2e.json",
+                        "exclude": [
+                            "**/node_modules/**",
+                            "**/src/app/fake-db/**/*"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "conflow"
+}

@@ -1,0 +1,56 @@
+
+  .profile-options{
+    margin: auto;
+  }
+
+  .profile-options-menu{
+    color: grey;
+    margin-left: 23px;
+    cursor: pointer;
+  }
+
+
+.edit-profile-dialog {
+
+  width: 350px;
+
+
+    .mat-dialog-content {
+
+      .wrap-image {
+        //cursor: pointer;
+        margin: 0 auto;
+        width: 140px !important;
+        margin-bottom: 20px !important;
+      }
+      .wrap-avatar {
+        position: relative;
+
+        .wrap-upload-remove-btn {
+          position: absolute;
+          bottom: 30px;
+          right: 20px;
+        }
+      }
+
+      .username {
+        height: 20px;
+      }
+    }
+
+
+  .profile-pic {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+    margin: 10px;
+  }
+
+  .savespinner {
+    line-height: 36px;
+    display: inline-block;
+  }
+
+
+}

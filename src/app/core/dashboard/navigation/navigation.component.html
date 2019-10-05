@@ -1,0 +1,30 @@
+<div>
+  <mat-toolbar class="side-header">
+    <div class="logo">
+      <img id="homeLogo" src="assets/images/divacloud_logoicon_white.png">
+      <div id="homeLogoText">DIVA Cloud</div>
+    </div>
+    <div class="sidebar-toggle">
+      <mat-icon id="homeToggleBtn" class="secondary-text mat-icon material-icons mat-icon-no-color" (click)="toggle()">menu</mat-icon>
+    </div>
+  </mat-toolbar>
+  <div class="sidebar-bottom">
+    
+    <div class="side-menu">
+        <ul>
+            <li class="side-nav-head">{{'NAV.APPLICATIONS' | translate}}</li>
+            <li id="HomeNavChannel" class="side-nav-item pointer" *ngIf="_launchDarklyService.flags['channel']" routerLink="/dashboard/channel{{_global.getDefaultChannel()?'/'+_global.getDefaultChannel():''}}"  [ngClass]="{'active':router.url.includes('/dashboard/channel')}">
+                <mat-icon>group</mat-icon>{{'NAV.CHANNEL' | translate}}
+            </li>
+            <li id="HomeNavFileManager" class="side-nav-item pointer" *ngIf="_launchDarklyService.flags['file-manager']" routerLink="/dashboard/files"  [ngClass]="{'active':router.url=='/dashboard/files'}">
+                <mat-icon>folder</mat-icon>{{'NAV.FILE_MANAGER' | translate}}
+            </li>
+            <!-- <li class="side-nav-item"><mat-icon>person</mat-icon>Loko Develop</li> -->
+            <li id="HomeNavSetting" class="side-nav-head">{{'settings' | translate}}</li>
+            <li id="HomeNavTag" class="side-nav-item pointer" *ngIf="_launchDarklyService.flags['tag']" routerLink="/dashboard/tags" [ngClass]="{'active':router.url=='/dashboard/tags'}">
+                <mat-icon>label</mat-icon>{{'NAV.TAG' | translate}}
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>

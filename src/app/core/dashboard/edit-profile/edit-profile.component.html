@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>
+    {{ 'profile.edit' | translate }}
+    <button class="mat-icon-button" (click)="matDialogRef.close()" matTooltip="Close"><mat-icon matSuffix class="material-icons-outlined">close</mat-icon></button>
+</h1>
+
+<div mat-dialog-content class="py-24 px-0 m-0" conflowPerfectScrollbar>
+
+    <!--<form name="userForm"  class="w-100-p" fxLayout="column" fxFlex>-->
+    <!-- Username -->
+    <div class="wrap-avatar">
+
+        <div appearance="outline" class="w-100-p wrap-image">
+            <input style="display: none" type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput>
+            <img mat-card-image class="profile-pic" *ngIf="picture && !selectedPicture" style="border-radius: 50%" src="{{picture}}"
+                 alt="" id="editProfileImg">
+            <img mat-card-image class="profile-pic" id="editPicSelected" *ngIf="selectedPicture" #pic style="border-radius: 50%" src="{{uploadedPicture}}"
+                 alt="">
+            <!--<img mat-card-image class="profile-pic" *ngIf="!picture && !selectedPicture" style="border-radius: 50%" src="../../../../assets/images/avatars/profile.jpg"
+                 alt="default image">-->
+            <div class="profile-pic" *ngIf="!picture && !selectedPicture"  >
+                <ngx-avatar [src]="picture" name="{{userName}}" size="120" [round]="true" id="editImgName"> </ngx-avatar>
+            </div> 
+            <div class="profile-options">
+                <i class="material-icons profile-options-menu" id="editProfileImgBtn" (click)="fileInput.click()" matTooltip="Edit picture" matTooltipPosition="left">edit</i>
+                <i class="material-icons profile-options-menu"id="deleteProfileImg"  (click)="removePicture()" matTooltip="Remove picture" matTooltipPosition="right">delete</i>
+            </div>
+        </div>
+
+
+
+        <!-- <div appearance="outline" class="wrap-message-username">
+        <span>{{ 'editProfileEnterName' | translate }}</span>
+      </div> -->
+        <mat-form-field appearance="outline" class="w-100-p" style="width: 100%;">
+            <mat-label>{{ 'members.firstName' | translate }}</mat-label>
+            <input matInput id="firstNameEdit" [(ngModel)]="firstName" class="username" #refFirstName="ngModel" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100-p" style="width: 100%;">
+            <mat-label>{{ 'members.lastName' | translate }}</mat-label>
+            <input matInput id="lastNameEdit" [(ngModel)]="lastName" class="username" #refLastName="ngModel" required>
+        </mat-form-field>
+        <!-- / Username -->
+
+
+    </div>
+    <!--</form>-->
+
+</div>
+
+
+<div mat-dialog-actions class="m-0 p-16 wrap-action-btn" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-stroked-button class="cancel-btn mr-8" id="profileEditCancelButton" [mat-dialog-close] (click)="close()" aria-label="{{'cancel'|translate}}">{{'cancel'|translate}}</button>
+    <button mat-stroked-button mat-button id="profileEditsaveButton" class="save-btn mr-8" color="primary" [disabled]="refFirstName.invalid || refLastName.invalid" [mat-dialog-close] (click)="save()" aria-label="{{'save'|translate}}">
+        <div class="savespinner" *ngIf="!isUploading" > {{'save'|translate}}</div>
+        <div class="savespinner" *ngIf="isUploading">
+            <mat-spinner class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation" diameter="20"
+                         color="primary"></mat-spinner>
+        </div>
+    </button>
+</div>

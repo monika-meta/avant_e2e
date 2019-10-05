@@ -1,0 +1,41 @@
+@import "../../../../assets/stylesheets/components/colors";
+channel-start {
+    display: flex;
+    flex: 1;
+
+    .big-circle {
+        border-radius: 50%;
+        width: 240px;
+        height: 240px;
+        line-height: 240px;
+        text-align: center;
+        background: white;
+        border: 1px solid;
+        border-color: rgba(0, 0, 0, 0.12);
+
+        @media screen and (max-width: $break-large) {
+            width: 160px;
+            height: 160px;
+            line-height: 160px;
+        }
+
+        .mat-icon {
+            font-size: 64px !important;
+            width: 64px !important;
+            height: 64px !important;
+            min-width: 64px !important;
+            min-height: 64px !important;
+            line-height: 64px !important;
+            color: $active-color;
+        }
+    }
+
+    .app-title {
+        font-weight: 600;
+        font-size: 32px;
+    }
+
+    .secondary-text {
+        font-size: 16px;
+    }
+}

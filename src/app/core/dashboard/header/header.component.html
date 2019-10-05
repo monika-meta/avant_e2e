@@ -1,0 +1,50 @@
+<mat-toolbar class="avant-header">
+    <!--*ngIf="!hiddenNavbar && !rightNavbar"-->
+    <div class="navbar-toggle-button">
+        <button mat-icon-button class="responsive-menu__btn"
+                (click)="toggle()" fxHide.gt-md>
+            <mat-icon class="secondary-text">menu</mat-icon>
+        </button>
+    </div>
+    <button mat-button fxHide fxShow.gt-xs id="homeSpaceDropdown"
+            class="space-button"
+            [matMenuTriggerFor]="spaceMenu">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <span *ngIf="_global.spaceForUser" style="font-weight: bold;" class="iso text-uppercase  mr-12">{{_global.selectedSpace.name}}</span>
+            <mat-icon class="s-16">keyboard_arrow_down</mat-icon>
+        </div>
+    </button>
+
+    <mat-menu #spaceMenu="matMenu" [overlapTrigger]="false">
+        <div *ngIf="_global.spaceForUser">
+            <button mat-menu-item *ngFor="let space of _global.spaceForUser" (click)="setSpace(space)">
+                <span fxLayout="row" fxLayoutAlign="start center">
+                    <span class="iso">{{space.name}}</span>
+                </span>
+            </button>
+        </div>
+    </mat-menu>
+    <div class="button-separator" fxHide fxShow.gt-xs *ngIf="_launchDarklyService.flags['profile']"></div>
+    <button id="profileBtn" mat-button [matMenuTriggerFor]="menu2" *ngIf="_launchDarklyService.flags['profile']">
+        <div class="avatar-wrap">
+            <div>
+                <ngx-avatar *ngIf="_global.userInfo.avatar" [src]="_global.userInfo.avatar" class="avatar" name="{{_global.userInfo.userName}}" size="40" [round]="true"> </ngx-avatar>
+                <ngx-avatar *ngIf="!_global.userInfo.avatar" [src]="" class="avatar" name="{{_global.userInfo.userName}}" size="40" [round]="true"> </ngx-avatar>
+            </div>
+        </div>
+        <div fxHide fxShow.gt-sm id="userNameDiv">
+            {{_global.userInfo.userName}}
+        </div>
+
+        <mat-icon fxHide fxShow.gt-sm>keyboard_arrow_down</mat-icon>
+    </button>
+    <mat-menu #menu2="matMenu">
+        <button mat-menu-item (click)="openEditProfileDialog()" id="profileEditBtn"><mat-icon>account_circle</mat-icon> {{'profile.edit'| translate }}</button>
+        <button mat-menu-item (click)="_authService.logout()" id="logoutBtn"><mat-icon>exit_to_app</mat-icon> {{'logout'| translate }}</button>
+    </mat-menu>
+    <div class="button-separator" fxHide fxShow.gt-xs *ngIf="_launchDarklyService.flags['language-switch']"></div>
+    <button mat-button [matMenuTriggerFor]="menu" fxHide fxShow.gt-xs *ngIf="_launchDarklyService.flags['language-switch']">{{currentLangId | uppercase}}</button>
+    <mat-menu #menu="matMenu" >
+        <button id="translateDropdown" mat-menu-item *ngFor="let lang of languages" (click)="changeLang(lang.id)">{{lang.title}}</button>
+    </mat-menu>
+</mat-toolbar>

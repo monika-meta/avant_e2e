@@ -1,0 +1,305 @@
+@import '~quill/dist/quill.snow.css';
+@import "~quill-emoji/dist/quill-emoji.css";
+
+channel-conversation {
+    display: flex;
+    flex: 1 0 auto;
+    overflow: hidden;
+    width: 100%;
+    min-height: calc(100vh - 131px);
+
+    .channel-conversation-loader {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        margin-left: 50%;
+    }
+
+    .channel-conversation {
+
+        #channel-conversation-content {
+            background: transparent;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+
+            .channel-messages {
+                position: relative;
+                padding: 10px 5px 0 60px;
+                width: 100%;
+                max-width: 916px;
+                margin: auto;
+                box-sizing: border-box;
+
+                .loading-msg-spinner-up {
+                    margin: 0 auto;
+                    margin-bottom: 40px;
+                    margin-top: 10px;
+                    max-width: 25px;
+                }
+
+                .loading-msg-spinner-down {
+                    margin: 0 auto;
+                    margin-bottom: 20px;
+                    margin-top: 10px;
+                    max-width: 25px;
+                }
+
+                .download-chip-content {
+                    cursor: pointer;
+                }
+
+                .message-row {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: flex-end;
+                    padding: 0 10px 10px 10px;
+                    margin-top: 20px;
+                    background: #fff;
+
+                    .contact-message-over {
+                        position: absolute;
+                        width: 100%;
+                        max-height: 500px;
+                        height: 100%;
+                        left: 0;
+                    }
+                    .failed-message{
+                        color:red;
+                    }
+                    .avatar {
+                        position: absolute;
+                        left: -50px;
+                        top: 10px;
+                        margin: 0;
+
+                        .avatar-content {
+                            width: 40px;
+                            height: 40px;
+                        }
+                    }
+
+                    .chat-contact-status-icon {
+                        position: absolute;
+                        left: -25px;
+                        top: 35px;
+                        font-size: 14px;
+                    }
+
+                    .chat-contact-status-icon-border {
+                        position: absolute;
+                        left: -25px;
+                        top: 35px;
+                        font-size: 14px;
+                        border: 7px solid;
+                        border-radius: 50%;
+                    }
+
+                    .contact-name {
+                        font-size: 15px;
+                        position: relative;
+                        top: 8px;
+                        font-weight: bold;
+                    }
+
+
+
+                    .bubble {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 12px 0 12px 0;
+                        max-width: 100%;
+
+                        .message {
+                            white-space: pre-wrap;
+                            line-height: 2.0;
+                            word-break: break-all;
+
+                            p {
+                                br {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+
+                    .edit-action-btn {
+                        display: inline;
+                        padding-top: 20px;
+                        padding-bottom: 20px;
+                    }
+
+                    &.contact, &.me {
+
+                        .time {
+                            position: relative;
+                            top: 7px;
+                            font-size: 11px;
+                        }
+
+                        .edited {
+                            display: inline;
+                            top: 7px;
+                            position: relative;
+                            padding-left: 5px;
+                        }
+
+                        .zeroborder {
+                            border: 0;
+                        }
+
+                        .deleteLoader {
+                            display: flex;
+                            align-items: center;
+                            padding: 0;
+                            min-width: 40px;
+                            margin-left: 10px;
+                        }
+                    }
+
+                    .message-more-menu-icon {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+
+                    .download-chip-wrapper {
+                        float: left;
+                    }
+
+                    .download-file-chip-area {
+                        width: 100%;
+                    }
+
+                    .download-chip {
+                        width: 80%;
+                        max-width: 400px;
+                        padding: 3px;
+                        border: solid 1px #d7d7d7;
+                        float: left;
+
+                        .mat-card {
+                            padding: 0;
+                        }
+                    }
+
+                    .download-chip-file-icon {
+                        float: left;
+                        width: 35px;
+                        padding: 3px;
+                    }
+
+                    .download-chip-content {
+                        float: left;
+                        max-width: calc(100% - 140px);
+                        word-break: break-all;
+                    }
+
+                    .download-chip-title {
+                        font-size: 14px;
+                        font-weight: bold;
+                        width: 100%;
+                    }
+
+                    .download-chip-subtitle {
+                        font-size: 12px;
+                    }
+
+                    .download-chip-actions {
+                        float: right;
+                    }
+
+                    .download-chip-actions button {
+                        padding: 0;
+                        min-width: 40px;
+                        margin-left: 5px;
+                    }
+
+                    .download-chip-progress {
+                        float: left;
+                        width: 100%;
+                        margin-top: 3px;
+                    }
+
+                    .edit-message-text-box {
+                        width: 100%;
+                        margin-top: 15px;
+                    }
+                }
+
+                .editable-message {
+                    display: block !important;
+                    padding: 10px !important;
+                    width: 98%;
+                    top: 15px;
+                }
+            }
+        }
+
+
+
+        .channel-conversation-footer {
+            position: relative;
+            bottom: 0;
+            margin: auto;
+            padding: 0;
+            width: 100%;
+            max-width: 916px;
+            background: none !important;
+            padding: 0 15px 0 60px;
+
+            .footer-send-message-text-box {
+                background-color: white;
+                margin-top: 15px;
+            }
+
+            .wrap-reply-icons {
+                position: relative;
+
+                .secondary-icon {
+                    /*width: auto;
+                    height: auto;*/
+                    mat-icon {
+                        font-size: 20px;
+                    }
+
+                    mat-spinner {
+                        margin: 0 auto;
+                    }
+
+                    .file-upload-button-loader {
+                        height: 40px;
+                        width: 40px;
+                        display: flex;
+                        align-items: center;
+                        vertical-align: middle;
+
+                        mat-spinner {
+                            margin: 0 auto;
+                        }
+                    }
+                }
+
+                .send-message-button {
+                    position: absolute;
+                    right: 0;
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+
+
+.lang-icon-opt{
+    font-size: 20px;
+    font-weight: 700;
+    /* margin-right: 12px; */
+    margin-left: 4px;
+    color: dimgrey;
+}
+
+

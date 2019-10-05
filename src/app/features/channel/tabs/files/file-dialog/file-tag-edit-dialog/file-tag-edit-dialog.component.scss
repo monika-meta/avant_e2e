@@ -1,0 +1,13 @@
+.mat-button {
+    .mat-spinner {
+        display: inline-block;
+        margin-bottom: -4px;
+        /*width: 19px;
+        height: 19px;*/
+        ::ng-deep svg {
+            circle {
+                stroke: white !important;
+            }
+        }
+    }
+}

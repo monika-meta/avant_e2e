@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>
+    {{title}}
+    <button class="mat-icon-button" (click)="matDialogRef.close()"><mat-icon matSuffix class="material-icons-outlined">close</mat-icon></button>
+</h1>
+
+    <div mat-dialog-content class="p-16 pb-0 m-0" conflowPerfectScrollbar>
+        <p>{{confirmMessage}}</p>
+      <div class="wrap-message-content">
+          <div>
+              <ngx-avatar [src]="contactObj.avatar" class="avatar" name="{{contactObj.userName}}" textSizeRatio="2.8" size="40" [round]="true"> </ngx-avatar>
+              <div class="wrap-contact-name-time">
+                <span class="contact-name">
+                    {{contactObj.userName}}
+                </span>
+                <span class="time secondary-text">{{messageObj.time | dateFormat}}</span>
+              </div>
+          </div>
+          <div class="bubble">
+              <div class="message" [innerHTML]="messageObj.message | hyperlink | highlight: messageObj.mentions : _globalService.usersForSpace | replaceEmojis"></div>
+          </div>
+          <mat-card class="download-chip" *ngFor="let file of messageObj.files;">
+              <div *ngIf="file.isDeleted===false">
+                  <div>
+                      <app-file-icons [fileTypeName]="file.fileType" iconWidth="29px" iconHeight="34px"></app-file-icons>
+                  </div>
+                  <div>
+                      <div class="conflow-3dot-truncate">{{file.name}}</div>
+                      <div>{{(file.size && file.size!=null && file.size!="" ? (file.size | fileSize)+"  ":"") }}</div>
+                  </div>
+              </div>
+          </mat-card>
+      </div>
+      <div class="wrap-checkbox" *ngIf="IsAnyFile(messageObj)">
+        <mat-checkbox class="px-16" [(ngModel)]="IsFileIncluded">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <p>{{'conversation.includeFile' | translate}}</p>
+            </div>
+        </mat-checkbox>
+
+      </div>
+      
+       
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16 wrap-action-btn" fxLayout="row" fxLayoutAlign="end center">
+
+      
+          <button
+            mat-stroked-button
+            mat-button
+            class="cancel-btn mr-8"
+            (click)="matDialogRef.close(['cancel', $event])"
+            aria-label="Cancel">
+              {{'cancel' | translate}}
+          </button>
+
+          <button mat-stroked-button
+                  mat-button color="primary"
+                  class="delete-btn mr-8"
+                  (click)="matDialogRef.close(['delete', $event])"
+                  aria-label="Delete">
+              {{'Delete' | translate}}
+          </button>    
+    </div>

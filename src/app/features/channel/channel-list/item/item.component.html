@@ -1,0 +1,7 @@
+<!-- item -->
+<a *ngIf="item.property"
+   (click)="getConversation(item);"
+   routerLink="/dashboard/channel/{{item.id}}" routerLinkActive="['active', 'accent']" [class.active]="isActive" [matBadge]="item.unread && item.unread!='0'?item.unread:''">
+    {{item.name}}
+</a>
+

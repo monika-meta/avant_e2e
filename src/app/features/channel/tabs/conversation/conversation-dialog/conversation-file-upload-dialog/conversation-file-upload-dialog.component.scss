@@ -1,0 +1,93 @@
+.conversation-file-upload-dialog .mat-dialog-container {
+    padding: 0;
+    overflow: hidden;
+
+    .mat-dialog-content {
+        /*overflow: visible;*/
+        height: 100%;
+
+        .upload-button {
+            padding: 0;
+
+            .mat-button-wrapper {
+                span {
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+
+    .mat-column-select {
+        overflow: initial;
+    }
+
+    .primary-color-input,
+    .secondary-color-input {
+        padding: 6px 8px;
+    }
+
+    .wrap-message-content {
+        position: relative;
+        padding-right: 10px;
+
+        .avatar {
+            position: relative;
+            left: -12px;
+            margin: 0;
+        }
+
+        .contact-name {
+            font-size: 15px;
+            position: relative;
+            top: 8px;
+            font-weight: bold;
+            left: -5px;
+        }
+
+
+
+        .bubble {
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 0 12px 38px;
+            max-width: 100%;
+            padding-bottom: 35px;
+
+            .message {
+                white-space: pre-wrap;
+                line-height: 1.2;
+            }
+        }
+
+        .time {
+            position: relative;
+            top: 7px;
+            left: -3px;
+            font-size: 11px;
+        }
+    }
+
+
+    .width100 {
+        width: 100%
+    }
+
+    .updatememberprogress {
+        padding-right: 155px
+    }
+
+    .reply-form form .message-text quill-editor #textarea-emoji {
+        top: unset !important;
+    }
+
+    .reply-form form .message-text quill-editor .ql-mention-list-container{
+        max-height:250px;
+    }
+}
+
+.file-upload-message-text-box {
+  width: 100%;
+  margin: 20px 0;
+}
+

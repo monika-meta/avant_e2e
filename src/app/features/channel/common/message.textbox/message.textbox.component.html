@@ -1,0 +1,21 @@
+<div class="reply-form" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center">
+
+  <form #replyForm="ngForm"
+        fxFlex fxLayout="row" fxLayoutAlign="start center">
+
+  <div class="message-text" fxFlex floatLabel="never" appearance="standard">
+    <quill-editor format="html"
+                  #replyInput
+                  
+                  placeholder="{{ 'conversation.inputMessage' | translate }}"
+                  [modules]="quillConfig"
+                  (keydown.enter)="createMessage($event)"
+                  (onSelectionChanged)="onSelectionChanged($event)"
+                  (onContentChanged)="onContentChanged($event)"
+                  (onEditorCreated)="setQuillEditorFocus($event)">
+    </quill-editor>
+  </div>
+  </form>
+
+
+</div>

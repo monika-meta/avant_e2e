@@ -1,0 +1,174 @@
+<div *ngIf="isLoading" class="channel-conversation-loader"><mat-spinner diameter="20"></mat-spinner></div>
+
+<!-- CHANNEL -->
+
+<div class="channel-conversation" fxFlex fxLayout="column" *ngIf="!isLoading">
+
+    <!-- CHANNEL CONTENT -->
+    <div id="channel-conversation-content" fxFlex="1 1 auto" (scroll)="onScroll($event)" conflowInfiniteScroller>
+
+
+        <!-- CHANNEL MESSAGES -->
+        <div class="channel-messages">
+            <div class="loading-msg-spinner-up" *ngIf="isScrollLoadingMsgUp === true"><mat-spinner diameter="20"></mat-spinner></div>
+
+            <!-- MESSAGE -->
+            <div *ngFor="let message of chatMessages;" class="message-row" id="messageRow"
+                 [ngClass]="{ 'me': message.who === user.id, 'contact': message.who !== user.id }"
+                 [class.wrap-editable-message]="message.editable"
+                 (mouseenter)="message.mouseOvered = true;"
+                 (mouseleave)="message.mouseOvered = false;">
+
+                <div *ngIf="findContact(message.who);let contact">
+
+                    <div>
+
+                        <div class="contact-message-over"></div>
+                        <ngx-avatar [src]="contact.avatar" class="avatar" name="{{contact.userName}}" textSizeRatio="2.8" size="40" [round]="true"> </ngx-avatar>
+                        <!-- <div class="chat-contact-status-icon-border"></div> -->
+                        <!-- <mat-icon class="s-16 status chat-contact-status-icon" [ngClass]="contact.status"></mat-icon> -->
+                        <span class="contact-name">
+                            {{contact.userName}}
+                        </span>
+                        <span class="time secondary-text" [ngClass]="{ 'failed-message':message.status=='2'}">{{message.status=='0'?'sending...':message.status=='2'?'failed':(message.time | dateFormat)}}</span>
+                        <div class="message-edited edited secondary-text" *ngIf="message.isEdited && message.isDeleted===false && !message.editable">({{'conversation.edited'|translate}})</div>
+                    </div>
+
+
+
+                    <div>
+                        <div *ngIf="message && message.isTranslating" class="message-more-menu-icon" style="margin-right: 25px;margin-top: 8px;"><mat-spinner diameter="20" ></mat-spinner></div>
+                        <button *ngIf="message.isDeleted===false && (message.who === user.id || _launchDarklyService.flags['message-translation'])" [style.display]="message.mouseOvered ? 'inherit':'none'" class="message-more-menu-icon" mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More"
+                                (click)="$event.stopPropagation(); message.editable = false; ">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #moreMenu="matMenu">
+                            <div>
+                                <button id="editMessage" *ngIf="message.who === user.id" matTooltip="{{ 'EDIT' | translate }}" mat-menu-item aria-label="edit" (click)="message.editable = true;">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>{{ 'EDIT' | translate }}</span>
+                                </button>
+                                <button id="deleteMessage" *ngIf="message.who === user.id" matTooltip="{{ 'REMOVE' | translate }}" mat-menu-item aria-label="remove" (click)="deleteMessage(message,contact)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>{{ 'Delete' | translate }}</span>
+                                </button>
+                                <button id="editMessageTranslateEN" *ngIf="_launchDarklyService.flags['message-translation']" matTooltip="{{ 'translate-en' | translate }}" mat-menu-item aria-label="translate-en" (click)="translateToEnglish(message)">
+                                    <span class="lang-icon-opt">A</span>
+                                    <span style="padding-left: 20px;">{{ 'translate-en' | translate }}</span>
+                                </button>
+                                <button id="editMessageTranslateJA" *ngIf="_launchDarklyService.flags['message-translation']" matTooltip="{{ 'translate-ja' | translate }}" mat-menu-item aria-label="translate-ja" (click)="translateToJapanese(message)">
+                                    <span class="lang-icon-opt">あ</span>
+                                    <span style="padding-left: 15px;">{{ 'translate-ja' | translate }}</span>
+                                </button>
+                            </div>
+                        </mat-menu>
+                    </div>
+
+                </div>
+                
+                
+                    <div *ngIf="!message.editable" class="bubble">
+                        <div class="message" *ngIf="!message.isDeleted" [innerHTML]=" message.message | hyperlink | highlight: message.mentions : _globalService.usersForSpace | replaceEmojis"></div>
+                        <div *ngIf="message.isDeleted">
+                            {{message.files && message.files.length>0 && !isFileExist(message.files)?('conversation.messageAndFileDelete' | translate):('conversation.messageDelete' | translate)}}
+                        </div>
+                    </div>
+
+                    <div *ngIf="!message.editable && message.translatedMessage;" class="bubble" style="padding: 0px;">
+                        <div *ngIf="message.translatedMessage" class="message" [innerHTML]="message.translatedMessage | hyperlink | highlight: message.mentions : _globalService.usersForSpace | replaceEmojis"></div>
+                    </div>
+
+                    <app-messagetextbox id="editMessageTextInput" class="edit-message-text-box" *ngIf="message.editable" #messgeBoxRef [contacts]="contacts" [user]="user" [channelId]="selectedChannelId" [message]="message" (messageObject)="updateMessage($event)"></app-messagetextbox>
+
+                    <div *ngIf="message.editable" class="edit-action-btn">
+                        <button mat-stroked-button
+                                class="cancel-btn mr-8"
+                                (click)="message.editable = false"
+                                aria-label="Cancel">
+                            Cancel
+                        </button>
+                        <!-- [disabled]="message.editableMessage === undefined"
+        [class.disabled-btn]="message.editableMessage === undefined" -->
+                        <button mat-button color="primary"
+                                class="save-btn mr-8"
+                                (click)="saveEditedMessage($event); message.editable = false;"
+                                aria-label="Save"
+                                id="messageEditSave">
+                            Save Changes
+                        </button>
+                    </div>
+                    <div *ngIf="message.files && message.files.length>0 && message.isDeleted!=true">
+                        <div *ngIf="!isFileExist(message.files)">
+                            {{'conversation.fileDelete'|translate}}
+                        </div>
+                    </div>
+                    <div *ngFor="let file of message.files;" class="download-file-chip-area">
+                        <div *ngIf="file.isDeleted===false" class="download-chip">
+                            <mat-card>
+                                <div class="download-chip-file-icon">
+                                    <app-file-icons [fileTypeName]="file.fileType" iconWidth="25px" iconHeight="29px"></app-file-icons>
+                                </div>
+                                <div class="download-chip-content" (click)="onSelect(file)">
+                                    <div class="download-chip-title conflow-3dot-truncate">{{file.name}}</div>
+                                    <!--<div class="download-chip-subtitle">{{(file.size && file.size!=null && file.size!="" ? (file.size | fileSize)+"  ":"")  + (file.fileType && file.fileType!=null? file.fileType : "")}}</div>-->
+                                    <div class="download-chip-subtitle">{{(file.size && file.size!=null && file.size!="" ? (file.size | fileSize)+"  ":"") }}</div>
+                                </div>
+                                <div class="download-chip-actions">
+                                    <button matTooltip="{{ 'DOWNLOAD' | translate }}" mat-stroked-button class="zeroborder" (click)="downloadFile(file); ">
+                                        <mat-icon>cloud_download</mat-icon>
+                                    </button>
+                                    <button matTooltip="{{ 'REMOVE' | translate }}" *ngIf="file.sender === user.id && file.id != fileInfo" mat-stroked-button class="zeroborder" aria-label="remove" (click)="onDeleteFile(file)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                    <div fxFlex="1 1 auto" class="deleteLoader" *ngIf = "isFileDeleting && file.id === fileInfo">
+                                        <mat-spinner diameter="19"></mat-spinner>
+                                    </div>
+                                    <button mat-stroked-button *ngIf="false">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                                <div>
+                                    <div class="download-chip-progress" *ngIf="file.showProgress"> <mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
+                                </div>
+                            </mat-card>
+                        </div>
+                    </div>           
+            </div>
+            <!-- / MESSAGE -->
+
+            <div class="loading-msg-spinner-down" *ngIf="isScrollLoadingMsgDown"><mat-spinner diameter="20"></mat-spinner></div>
+
+        </div>
+        <!-- CHANNEL MESSAGES -->
+
+    </div>
+    <!-- / CHANNEL CONTENT -->
+    <!-- CHANNEL FOOTER -->
+    <div class="channel-conversation-footer" fxFlex="0 0 auto" fxLayout="column">
+
+        <!-- REPLY FORM -->
+        <app-messagetextbox #messgeBoxRef [contacts]="contacts" [user]="user" class="footer-send-message-text-box" [channelId]="selectedChannelId" (messageObject)="reply($event)"></app-messagetextbox>
+        <div class="wrap-reply-icons">
+
+            <!----------------------------file attachment button--------------->
+            <button class="secondary-icon" [ngClass]="{ 'loadingbutton': isFileUploading ===true}"
+                    mat-icon-button matTooltip="{{ 'conversation.uploadFile' | translate }}"
+                    (click)="openFileUploadDialog()">
+                <mat-icon *ngIf="!isFileUploading">attach_file</mat-icon>
+                <mat-spinner *ngIf="isFileUploading" diameter="20"></mat-spinner>
+                <!--<div class="file-upload-button-loader" *ngIf="isFileUploading"><mat-spinner diameter="20"></mat-spinner></div>-->
+            </button>
+            <!-------------------------Send button------------------------------------>
+            <button id="messageSend" (click)="saveNewMessage($event)" matTooltip="{{ 'send' | translate }}" class="send-message-button" mat-icon-button type="submit" aria-label="Send message">
+                <mat-icon class="secondary-text">send</mat-icon>
+            </button>
+        </div>
+
+        <!-- / REPLY FORM -->
+
+    </div>
+    <!-- / CHANNEl FOOTER-->
+
+</div>
+<!-- / CHANNEl -->

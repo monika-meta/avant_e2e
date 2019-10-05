@@ -1,0 +1,33 @@
+<div class="avant-sidenav-content">
+
+    <mat-drawer-container autosize class="inner-container">
+        <mat-drawer [(opened)]="opened" #drawerUsers class="sidenav-users" [(mode)]="over">
+            <div *ngIf="isLoading" class="channel-loader"><mat-spinner diameter="20"></mat-spinner></div>
+
+            <channel-list [channelList]="nestedChannelList" *ngIf="!isLoading"></channel-list>
+        </mat-drawer>
+        <div *ngIf="!selectedChannelId" class="h-100">
+            <channel-start (toggleChannel)="toggleChannelist()" class="h-100"></channel-start>
+        </div>
+        <div *ngIf="selectedChannelId">
+            <div class="slider-icons">
+                <mat-icon class="secondary-text mat-icon material-icons mat-icon-no-color sidebar-toggle" (click)="toggleChannelist()">group</mat-icon>
+            </div>
+            <div class="breadcrumb">    
+                <ul  id="homeBreadcrumb">
+                    <li *ngFor="let item of conversationTitleItems; last  as isLast">
+                        <a>
+                            {{item.name}}
+                            <mat-icon *ngIf="!isLast" class="secondary-text mat-icon material-icons mat-icon-no-color">keyboard_arrow_right</mat-icon>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <channel-tabs (channelToggel)="toggleSidePanel()" [channelId]="selectedChannelId">
+
+            </channel-tabs>
+        </div>
+    </mat-drawer-container>
+
+</div>
+

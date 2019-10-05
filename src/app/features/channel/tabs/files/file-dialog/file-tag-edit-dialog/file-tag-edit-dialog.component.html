@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>
+    {{ 'filesTagEdit.title' | translate }}
+    <button class="mat-icon-button" (click)="matDialogRef.close(['cancel', $event])" matTooltip="Close"><mat-icon matSuffix class="material-icons-outlined">close</mat-icon></button>
+</h1>
+<div mat-dialog-content class="p-16 pb-0 m-0" conflowPerfectScrollbar>
+    
+     <!-- tag selection component -->
+    <app-tags-selection #refTagSelection *ngIf="!isTagSelectionLoading" [showLoader]="true" [defaultTags]="defaultTags" [allTags]="allTags" [fileTags]="fileTags" displayText="{{ 'fileUpload.addTagsToFile' | translate }}" [isDefaultTagRemovable]="false" [IsRemoveDisableTagsFromTagSelection]="true"></app-tags-selection>
+    <span *ngIf="isTagSelectionLoading"><mat-spinner diameter="19" style="display:inline; margin:2px;"></mat-spinner></span>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <div class="action-btn">
+        <button mat-stroked-button
+                mat-button
+                class="cancel-btn"
+                (click)="matDialogRef.close(['cancel', $event])"
+                aria-label="Cancel">
+            {{ 'cancel' | translate }}
+        </button>
+        <button mat-stroked-button
+                mat-button color="primary"
+                class="save-btn"
+                (click)="UpdateTags($event)"
+                aria-label="Save"
+                [disabled]="isLoading">
+            <mat-icon class="mr-8" *ngIf="!isLoading">save</mat-icon>
+            <span *ngIf="!isLoading">{{ 'save' | translate }}</span>
+            <span *ngIf="isLoading"><mat-spinner diameter="19"></mat-spinner></span>
+        </button>
+    </div>
+</div>

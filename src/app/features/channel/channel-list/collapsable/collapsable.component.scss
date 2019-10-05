@@ -1,0 +1,42 @@
+:host {
+
+    .folded:not(.unfolded) & {
+
+        .channel-list-link {
+
+            > span {
+                opacity: 0;
+                transition: opacity 200ms ease;
+            }
+        }
+
+        &.open {
+
+            .children {
+                display: none !important;
+            }
+        }
+    }
+
+    .channel-list-link {
+
+        .collapsable-arrow {
+            transition: transform .3s ease-in-out, opacity .25s ease-in-out .1s;
+            transform: rotate(0);
+        }
+    }
+
+    /*> .children {
+        overflow: hidden;
+    }*/
+
+    &.open {
+
+        > .channel-list-link {
+
+            .collapsable-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    }
+}
