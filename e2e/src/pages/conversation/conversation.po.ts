@@ -54,7 +54,10 @@ export class ConversationPage {
     getLastMessageRowEle() {
         return element.all(by.id('messageRow')).last();
     }
-    getMenuIconInLastMessageRow(){
+    getLastMessageRowEleMoreMenuIcon() {
+        return element(by.xpath(`//div[@id="messageRow"][last()]//button[contains(@class,"message-more-menu-icon")]`));
+    }
+    getMenuIconInLastMessageRow() {
         return element(`//*[@id="messageRow"]/div[1]/div[2]/button[1]`);
     }
     getsaveEditMessageEle() {
@@ -77,6 +80,9 @@ export class ConversationPage {
     }
     getDeletePopUpCancelBtnEle() {
         return element(by.css('button[aria-label="Cancel"]'));
+    }
+    getSideNavHeader(){
+        return element(by.xpath('//div[@class="sidebar-bottom"]//div[@class="side-menu"]//li[@class="side-nav-head"][1]'))
     }
 
 }

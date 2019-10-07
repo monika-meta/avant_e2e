@@ -48,9 +48,9 @@ describe('Conversation', () => {
     it('Verify functionality of Edit message ', (done) => {
         browser.sleep(5000);
         util.waitForElementToBeVisible(conversationPage.getLastMessageRowEle(), 15000);
-        const actionPopupBtn = conversationPage.getLastMessageRowEle().all(by.css('button[aria-haspopup="true"]')).first();
         browser.actions().mouseMove(conversationPage.getLastMessageRowEle()).perform();
-        conversationPage.getLastMessageRowEle().all(by.css('button[aria-haspopup="true"]')).first().click();
+        util.waitForElementToBeVisible(conversationPage.getLastMessageRowEleMoreMenuIcon(), 15000);
+        conversationPage.getLastMessageRowEleMoreMenuIcon().click();
         util.waitForElement('editMessage');
         util.waitForElementToBeVisible(conversationPage.getMessageEditPopupBtnEle(), 15000);
         browser.sleep(3000);
@@ -142,7 +142,8 @@ describe('Conversation', () => {
         util.waitForElementToBeVisible(conversationPage.getLastMessageRowEle(), 15000);
         browser.actions().mouseMove(conversationPage.getLastMessageRowEle()).perform();
         browser.sleep(1000);
-        conversationPage.getLastMessageRowEle().all(by.css('button[aria-haspopup="true"]')).first().click();
+        util.waitForElementToBeVisible(conversationPage.getLastMessageRowEleMoreMenuIcon(), 15000);
+        conversationPage.getLastMessageRowEleMoreMenuIcon().click();
         util.waitForElement('deleteMessage');
         util.waitForElementToBeVisible(conversationPage.getDeleteMessageEle(), 15000);
         browser.sleep(3000);
@@ -153,7 +154,7 @@ describe('Conversation', () => {
         conversationPage.getDeletePopUpDeleteBtnEle().click();
         browser.sleep(3000);
         util.waitForElementToBeVisible(conversationPage.getLastMessageRowEle());
-        expect(conversationPage.getTextMessageByTextEle(text + ' edited').length).toBe(0);
+        expect(conversationPage.getTextMessageByTextEle(text + ' edited').length).toBe(undefined);
         // conversationPage.getDeletePopUpCancelBtnEle().click();
 
     });
@@ -172,28 +173,43 @@ describe('Conversation', () => {
         util.waitForElementToBeVisible(homePage.selectLanguageBtnHeader());
         browser.sleep(3000);
         homePage.selectLanguageBtnHeader().click();
-        // expect(homePage.getLanguageTranslateOptionEle('English')).toBeTruthy();
-        // browser.actions().mouseMove(homePage.getLanguageTranslateOptionEle('English')).perform();
+        expect(homePage.getLanguageTranslateOptionEle(1)).toBeTruthy();
+        browser.sleep(3000);
+        browser.actions().mouseMove(homePage.getLanguageTranslateOptionEle(1)).perform();
         // browser.sleep(15000);
 
-        // homePage.getLanguageTranslateOptionEle('English').click();
+        homePage.getLanguageTranslateOptionEle(1).click();
+        browser.sleep(3000);
         // expect(conversationPage.getLastMessageRowEle()).toBeTruthy();
         // browser.actions().mouseMove(conversationPage.getLastMessageRowEle()).perform();
-        // conversationPage.getLastMessageRowEle().all(by.css('button[aria-haspopup="true"]')).first().click();
-        // expect(conversationPage.getEditMessageTranslateEnEle()).toBeTruthy();
+        // browser.sleep(3000);
+        expect(conversationPage.getSideNavHeader().getText()).toEqual('APPLICATIONS');
     });
 
     it('Verify functionality of Collapse and expand', () => {
+        browser.sleep(3000);
+        util.waitForElementToBeVisible(homePage.selectLanguageBtnHeader());
+        browser.sleep(3000);
         homePage.selectLanguageBtnHeader().click();
+        expect(homePage.getLanguageTranslateOptionEle(1)).toBeTruthy();
+        browser.sleep(3000);
+        browser.actions().mouseMove(homePage.getLanguageTranslateOptionEle(1)).perform();
+        browser.sleep(5000);
 
-        // homePage.getLanguageTranslateEle().click();
-
-        expect(homePage.getLanguageTranslateOptionEle('English')).toBeTruthy();
-        homePage.getLanguageTranslateOptionEle('English').click();
-        expect(conversationPage.getLastMessageRowEle()).toBeTruthy();
+        homePage.getLanguageTranslateOptionEle(1).click();
+        browser.sleep(3000);
+        conversationPage.getMessageEditorEle().click();
+        conversationPage.getMessageEditorEle().sendKeys('e2e testing Message Language');
+        conversationPage.getmessageSendEle().click();
+        browser.sleep(6000);
+        util.waitForElementToBeVisible(conversationPage.getLastMessageRowEle(), 15000);
         browser.actions().mouseMove(conversationPage.getLastMessageRowEle()).perform();
-        conversationPage.getLastMessageRowEle().all(by.css('button[aria-haspopup="true"]')).first().click();
+        browser.sleep(1000);
+        util.waitForElementToBeVisible(conversationPage.getLastMessageRowEleMoreMenuIcon(), 15000);
+        conversationPage.getLastMessageRowEleMoreMenuIcon().click();
         expect(conversationPage.getEditMessageTranslateEnEle()).toBeTruthy();
+
+
     });
 
 });

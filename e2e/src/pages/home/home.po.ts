@@ -18,8 +18,8 @@ export class HomePage {
     getLanguageTranslateEle() {
         return element(by.id('translateDropdown'));
     }
-    getLanguageTranslateOptionEle(lang) {
-        return element(by.buttonText(lang));
+    getLanguageTranslateOptionEle(index) {
+        return element(by.xpath(`//button[@id="translateDropdown"][${index}]`));
     }
     getHomeLogoTextEle() {
         return element(by.id('homeLogoText'));
