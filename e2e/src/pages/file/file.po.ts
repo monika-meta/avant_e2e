@@ -16,8 +16,8 @@ export class FilePage {
     getDefaultChannelTags() {
         return element.all(by.css('mat-chip[role="option"]')).get(1);
     }
-    getDefaultChannelTextTags() {
-        return element.all(by.css(`mat-chip[role="option"]`)).get(1).element(by.xpath('span'));
+    getDefaultChannelTextTags(text) {
+        return element(by.xpath(`//mat-chip[@role="option"][2]//span[text()="${text}"]`));
     }
     getInputBoxForTag() {
         return element(by.css('input[placeholder="Type tag name here..."]'));

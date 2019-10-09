@@ -61,16 +61,16 @@ export class HomePage {
     }
 
     getHomeTabConversationEle() {
-        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Conversation"]"]'));
+        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Conversation"]'));
     }
     getHomeTabFilesEle() {
-        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Files"]"]'));
+        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Files"]'));
     }
     getHomeTabStatusEle() {
-        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Status"]"]'));
+        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Status"]'));
     }
     getHomeTabMembersEle() {
-        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Members"]"]'));
+        return element(by.xpath('//div[contains(@class,"mat-tab-label")][@cdkmonitorelementfocus]//div[@class="mat-tab-label-content"][text()="Members"]'));
     }
 
 }
