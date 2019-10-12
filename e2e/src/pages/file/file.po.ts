@@ -60,7 +60,7 @@ export class FilePage {
         return element(by.xpath('//*[@id="mat-autocomplete-0"]/div[1]'));
     }
     getFYCategory() {
-        return element(by.xpath('//*[@id="mat-autocomplete-0"]/div[1]/ul[1]/li[3]'));
+        return element(by.xpath('//div[contains(@class,"autocomplete-category-area")]/ul[1]/li[3]'));
     }
     getTableHeader(value) {
         return element.all(by.css(`div[role="presentation"][value="${value}"]`));
@@ -103,5 +103,8 @@ export class FilePage {
     getFileRow() {
         return element(by.css(`dx-data-grid#gridContainer
         > div > div:nth-of-type(6) > div > div > div > div > table > tbody > tr:nth-of-type(4)`));
+    }
+    getOverlayDiv() {
+        return element(by.css('div[class="cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing"]'));
     }
 }
